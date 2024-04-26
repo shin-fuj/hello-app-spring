@@ -13,7 +13,10 @@ jobs:
             - maven
       - run:
           name: build and push to GitHub Packages
-          command: mvn -X -B package docker:build docker:push -Dimage.tag=`date +%Y%m%dT%H%M%S-%3N` --file pom.xml -s ./.circleci/settings.xml
+          command: |
+            echo "GITHUB_USER=${GITHUB_USER}"
+            echo "GITHUB_TOKEN=${GITHUB_TOKEN}"
+            mvn -X -B package docker:build docker:push -Dimage.tag=`date +%Y%m%dT%H%M%S-%3N` --file pom.xml -s ./.circleci/settings.xml
       - save_cache:
           paths:
             - ~/.m2
