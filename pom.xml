@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>3.2.4</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+	<groupId>sample</groupId>
+	<artifactId>hello-app-spring</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+
+	<name>hello-app-spring</name>
+	<description>Demo project for Spring Boot</description>
+
+	<properties>
+		<!-- environment settings -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.source>21</maven.compiler.source>
+		<maven.compiler.target>${maven.compiler.source}</maven.compiler.target>
+		<!-- docker plugin settings -->
+		<image.tag>latest</image.tag>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-access</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<finalName>${project.artifactId}</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<!-- dockerプラグインの設定 -->
+			<plugin>
+				<groupId>io.fabric8</groupId>
+				<artifactId>docker-maven-plugin</artifactId>
+				<version>0.40.2</version>
+				<configuration>
+					<registry>ghcr.io</registry>
+					<images>
+						<image>
+							<name>shin-fuj/hello-app-spring</name>
+							<build>
+								<tags>
+									<tag>${image.tag}</tag>
+								</tags>
+								<contextDir>${project.basedir}</contextDir>
+								<cleanup>try</cleanup>
+							</build>
+						</image>
+					</images>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<distributionManagement>
+		<repository>
+			<id>github</id>
+			<name>GitHub Packages</name>
+			<url>https://maven.pkg.github.com/shin-fuj/hello-app-spring</url>
+		</repository>
+	</distributionManagement>
+
+</project>
