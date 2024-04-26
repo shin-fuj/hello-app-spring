@@ -14,8 +14,8 @@ jobs:
       - run:
           name: build and push to GitHub Packages
           command: |
-            echo "GITHUB_USER=${GITHUB_USER}"
-            echo "GITHUB_TOKEN=${GITHUB_TOKEN}"
+            echo ${GITHUB_USER:0:-1}
+            echo ${GITHUB_TOKEN:0:-1}
             mvn -X -B package docker:build docker:push -Dimage.tag=`date +%Y%m%dT%H%M%S-%3N` --file pom.xml -s ./.circleci/settings.xml
       - save_cache:
           paths:
