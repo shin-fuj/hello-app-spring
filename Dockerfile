@@ -11,3 +11,4 @@ COPY --from=builder application/spring-boot-loader/ ./
 #COPY --from=builder application/snapshot-dependencies/ ./
 COPY --from=builder application/application/ ./
 ENTRYPOINT ["java", "org.springframework.boot.loader.launch.JarLauncher"]
+LABEL org.opencontainers.image.source https://github.com/shin-fuj/hello-app-spring
