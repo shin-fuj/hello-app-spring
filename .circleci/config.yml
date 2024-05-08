@@ -15,7 +15,7 @@ jobs:
           name: build and push to GitHub Packages
           command: |
             docker login ghcr.io -u ${GITHUB_USER} -p ${GITHUB_TOKEN}
-            mvn -X -B package docker:build docker:push -Dimage.tag=`date +%Y%m%dT%H%M%S-%3N` --file pom.xml -s ./.circleci/settings.xml
+            mvn -X -B package docker:build docker:push -Dimage.tag=`date +%Y%m%dT%H%M%S-%3N` --file pom.xml
       - save_cache:
           paths:
             - ~/.m2
